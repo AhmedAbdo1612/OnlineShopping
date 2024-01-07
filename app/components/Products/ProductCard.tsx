@@ -6,15 +6,28 @@ import { Rating } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { useEffect } from "react";
+
 interface ProductCardProps {
     data: any
 } 
 const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
+    useEffect(() => {
+        AOS.init({
+          easing: "ease",
+            duration:1000,
+          offset: 100,
+          mirror:true
+          
+        });
+      }, []);
     const router = useRouter()
     const productRatigs = data.reviews.length >0 ?
      data.reviews.reduce((acc:number, item:any)=>(acc+item.rating),0)/data.reviews.length :0
     return (
-        <div onClick={()=>(router.push(`/product/${data.id}`))}
+        <div onClick={()=>(router.push(`/product/${data.id}`))} data-aos = "fade-up"
           className="col-span-1 cursor-pointer 
         border-[1.2px] border-slate-200 bg-slate-50
         rounded-sm p-2 transition hover:scale-105 text-center text-sm ">
