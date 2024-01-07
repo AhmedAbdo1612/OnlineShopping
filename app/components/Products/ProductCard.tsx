@@ -5,10 +5,10 @@ import { truncateText } from "@/utils/truncateText";
 import { Rating } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-
-import AOS from "aos";
-import "aos/dist/aos.css";
 import { useEffect } from "react";
+
+import 'aos/dist/aos.css';
+const AOS = require('aos')
 
 interface ProductCardProps {
     data: any
