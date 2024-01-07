@@ -8,11 +8,11 @@ import { SyncLoader } from "react-spinners";
 import Link from "next/link";
 import { AiOutlineGoogle } from "react-icons/ai";
 
-const RegisterForm = () => {
+const LoginForm = () => {
     const [loading, setLoading] = useState(false)
     const { register, handleSubmit, formState: { errors } } = useForm<FieldValues>({
         defaultValues: {
-            name: "", email: "", password: "",
+             email: "", password: "",
         }
     })
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
@@ -21,15 +21,11 @@ const RegisterForm = () => {
     }
     return (
         <>
-            <Heading title="Sign up for E~shop" />
-            <Button outline label="Sign up with Google" 
+            <Heading title="Sign in for E~shop" />
+            <Button outline label="Continue with Google" 
             icon={AiOutlineGoogle} onClick={()=>{}}/>
             <hr className="bg-slate-300 w-full h-px" />
-            <Input id="name" label="Name" disabled={loading}
-                register={register}
-                errors={errors}
-                required
-            />
+        
             <Input id="email" label="Email" disabled={loading}
                 register={register}
                 errors={errors}
@@ -43,15 +39,15 @@ const RegisterForm = () => {
                 type="password"
             />
             {loading && <SyncLoader color="rgba(214, 54, 140, 1)" className="transition" />}
-            {!loading && <Button label={loading ? "Loading" : "Sign Up"} onClick={handleSubmit(onSubmit)} />}
+            {!loading && <Button label={"Login"} onClick={handleSubmit(onSubmit)} />}
             <p className="text-sm">
-                Already have account? {" "}
-                <Link className="underline" href="/login">
-                    Login
+                Do not have account? {" "}
+                <Link className="underline" href="/register">
+                    Sign Up
                 </Link>
             </p>
         </>
     );
 }
 
-export default RegisterForm;
+export default LoginForm;
