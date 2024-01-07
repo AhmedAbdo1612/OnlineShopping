@@ -1,5 +1,4 @@
 "use client";
-import { Icon } from "@mui/material";
 import { IconType } from "react-icons";
 
 
@@ -15,7 +14,7 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = ({
     label, disapled,
     outline, small,
-    custom, icon, onClick }) => {
+    custom, icon:Icon, onClick }) => {
     return (
         <button disabled = {disapled} onClick={onClick}
          className={`disabled:opacity-70 disabled:cursor-not-allowed
@@ -27,7 +26,7 @@ const Button: React.FC<ButtonProps> = ({
          ${small?"py-1 px-2 border-[1px]":"py-3 px-4 border-[2px]"}
          ${custom?custom: null}
          `}>
-            {icon && <Icon />}
+            {Icon && <Icon size={24}/>}
             {label}
         </button>
     );
