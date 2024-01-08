@@ -7,6 +7,10 @@ import Button from "../components/Button/Button";
 import { SyncLoader } from "react-spinners";
 import Link from "next/link";
 import { AiOutlineGoogle } from "react-icons/ai";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
     const [loading, setLoading] = useState(false)
@@ -15,15 +19,31 @@ const RegisterForm = () => {
             name: "", email: "", password: "",
         }
     })
+    const router = useRouter()
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         setLoading(true)
+        axios.post('/api/register', data).then(() => {
+            toast.success("Account Created!")
+            signIn('credentials', {
+                email: data.email, password: data.password, redirect: false
+            }).then((callback) => {
+                if (callback?.ok) {
+                    router.push('/cart')
+                    router.refresh()
+                    toast.success("Logged In")
+                }
+                if (callback?.error) {
+                    toast.error(callback.error)
+                }
+            })
+        }).catch(() => toast.error("Somethin went wrong")).finally(() => setLoading(false))
         console.log(data)
     }
     return (
         <>
             <Heading title="Sign up for E~shop" />
-            <Button outline label="Sign up with Google" 
-            icon={AiOutlineGoogle} onClick={()=>{}}/>
+            <Button outline label="Sign up with Google"
+                icon={AiOutlineGoogle} onClick={() => { }} />
             <hr className="bg-slate-300 w-full h-px" />
             <Input id="name" label="Name" disabled={loading}
                 register={register}
