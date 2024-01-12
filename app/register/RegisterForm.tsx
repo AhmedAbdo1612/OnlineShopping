@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Heading from "../components/Heading";
 import Input from "../components/Inputs/Inputs";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
@@ -11,15 +11,25 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-
-const RegisterForm = () => {
+import { SafeUser } from "@/types";
+interface RegisterFormProps{
+    currentUser:SafeUser|any
+}
+const RegisterForm:React.FC<RegisterFormProps> = ({currentUser}) => {
+    const router = useRouter()
+    useEffect(()=>{
+        if(currentUser){
+            router.push("/cart")
+            router.refresh()
+        }
+    },[])
     const [loading, setLoading] = useState(false)
     const { register, handleSubmit, formState: { errors } } = useForm<FieldValues>({
         defaultValues: {
             name: "", email: "", password: "",
         }
     })
-    const router = useRouter()
+   
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         setLoading(true)
         axios.post('/api/register', data).then(() => {
@@ -38,6 +48,9 @@ const RegisterForm = () => {
             })
         }).catch(() => toast.error("Somethin went wrong")).finally(() => setLoading(false))
         console.log(data)
+    }
+    if(currentUser){
+        return <p className="text-center">Logged in, Redirecting....</p>
     }
     return (
         <>

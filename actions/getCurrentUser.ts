@@ -21,6 +21,6 @@ export const getCurrentUser = async function () {
         updatedAt: currentUser.updatedAt.toISOString(),
     emailVerified:currentUser.emailVerified?.toString()||null}
     } catch (error) {
-        
+        console.log(error)
     }
 }
