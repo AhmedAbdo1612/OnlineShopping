@@ -4,7 +4,7 @@ import FormWrap from "../components/FormWrap";
 import RegisterForm from "./RegisterForm";
 
 const Register = async() => {
-    const currentUser = getCurrentUser()
+    const currentUser = await getCurrentUser()
     return ( 
     <Container>
         <FormWrap>
